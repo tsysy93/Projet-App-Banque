@@ -3,6 +3,7 @@
 ## Table des matières
 
 - [Besoin](#Besoin)
+- [Fonctionel](#Fonctionnelle)
 
 ---------
 
@@ -21,7 +22,7 @@ je suis Cécile Simon, secrétaire de direction de la banque CashFund,
 Nous souhaitons mettre à jour notre infrastructure technologique bancaire, nous trouvons votre structure peut-être qualifiée. Je vous transmets nos demandes techniques, ainsi que fonctionnelles.
 
 L'infrastructure comporte plusieurs parties :
- - La partie RGBR permettant le stockage de toutes les données. Elle comporte :
+ - La partie RGBDR permettant le stockage de toutes les données. Elle comporte :
     - Les données clients
     - Les données de transactions
     - Les liaisons avec leur conseiller
@@ -74,4 +75,110 @@ L'objectif de ce projet est de réalisé un cahier des charges dans un premier t
 
 ----
 
-##
+## Fonctionnelle <a id="Fonctionnelle">
+
+### Client
+
+```mermaid 
+sequenceDiagram
+   actor Client
+   participant Connection
+   participant Banque
+
+   Client -> Banque: Consultation des informations de la banque
+   Client ->> Connection: Connection
+   Connection ->> Banque: Consultation des informations perso
+   Connection ->> Banque: Consultation/Impression de son RIB
+   Connection ->> Banque: Communication avec le conseiller
+   Connection ->> Banque: Consultation des infos conseiller
+   Connection ->> Banque: Consultation des infos de la bourse
+   Connection ->> Client: Deconnection
+```
+
+------
+
+### Salarié
+
+```mermaid 
+sequenceDiagram
+   actor Conseiller
+   participant Connection
+   participant Banque
+
+   Conseiller -> Banque: Consultation des informations de la banque
+   Conseiller ->> Connection: Connection
+   Connection ->> Banque: Visualiser compte clients
+   Connection ->> Banque: Intervenir compte clients
+   Connection ->> Banque: Création/Modif dossier clients
+   Connection ->> Banque: Création comptes
+   Connection ->> Banque: Création demande CB
+   Connection ->> Banque: Export dossier clients
+   Connection ->> Banque: Communication avec clients
+   Connection ->> Conseiller: Deconnection
+```
+
+## Technique
+
+### BDD
+
+```mermaid 
+erDiagram
+
+ Client {
+   int id_client
+   stirng mdp_client
+   string nom_client
+   string prenom_client
+   string domTel_client
+   string mail_client
+   string adresse_client
+   DateOnly DateNaissance
+   int Cp_client
+   string ville_client
+   string nationalite_client
+   bit Supprimer
+   string Nif_client
+   int modifid
+   DateTime modifDate
+   int creaId
+   DateTime creaDate
+ }
+
+CompteClientIntermediaireCompte {
+   int id_client
+   int id_compte
+}
+
+Compte {
+   int id_compte
+   int id_type
+   string iban
+   string bic
+   decimal actuel 
+   int modifid
+   DateTime modifDate
+   int creaId
+   DateTime creaDate
+ }
+
+ HistoriqueCompte {
+   int id_compte
+   int id_histo
+ }
+
+ TypeCompte {
+   int id_typeCompte
+   string libelle
+   decimal plafond
+   decimal decouvert
+ }
+
+Conseiller {
+
+}
+
+Entreprise {
+
+}
+
+```
