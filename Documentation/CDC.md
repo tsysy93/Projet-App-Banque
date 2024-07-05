@@ -164,6 +164,8 @@ Compte {
  HistoriqueCompte {
    int id_compte
    int id_histo
+   decimal montant
+   datetime date
  }
 
  TypeCompte {
