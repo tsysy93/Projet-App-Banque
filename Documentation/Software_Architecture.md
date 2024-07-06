@@ -15,6 +15,10 @@
 
 ## Architecture globale <a id="TotalArchitecture"/>
 
+Schéma global de l'architecture du logiciel
+
+> Ce schéma est global, il permet uniquement de voir l'ensemble des liaisons entre les services et les modules
+
 ``` mermaid
 flowchart LR
     idCore <--> ModuleManager
@@ -41,7 +45,13 @@ flowchart LR
 
 ## Services <a id="ServicesChapter">
 
+Cette partie concerne uniquement l'explication ainsi que l'explication de chaque service
+
 ### Dépendance du Core <a id="CoreDependance"/>
+
+Ce service est le coeur logiciel, celui-ci a pour rôle d'initialiser ainsi que de manager tous les autres services.
+
+> Les services présents dans le coeur logiciel doivent être uniques (singleton)
 
 ``` mermaid
 flowchart LR
@@ -53,14 +63,21 @@ flowchart LR
 
 ### Repository <a id="RepositoryDependance">
 
+Ce service est le manager des données il possède différents rôles :
+ - Lié le logiciel à ça base de données
+ - Créer les nouveaux objets
+ - Supprimer les objets
+ - Modifier les objets
+
 ``` mermaid
 flowchart LR
     Repository <--> Database[(Database)]
     Repository -.Include.-> Config
 ```
 
-
 ### UI <a id="UiDependance">
+
+Ce service regroupé uniquement tous les composants graphique du logiciel
 
 ``` mermaid
 flowchart LR
@@ -73,6 +90,8 @@ flowchart LR
 
 ### Module d'authentification <a id="AuthModule"/>
 
+Ce module permet à l'utilisateur de se connecter, ainsi que d'identifier ces droits dans l'application
+
 ``` mermaid
 flowchart LR
     ModuleManager --Call--> AuthModule
@@ -84,6 +103,8 @@ flowchart LR
 
 ### Module clients <a id="CustomerModule"/>
 
+Ce module permet à un banquier d'accéder au dossier de ses clients
+
 ``` mermaid
 flowchart LR
 ModuleManager --Call--> CustomerModule
@@ -93,6 +114,8 @@ CustomerModule --> Repository
 ```
 
 ### Module Responsable <a id="ManagerModule"/>
+
+Ce module permet à un responsable de consulter les dossiers, les résultats, les demandes d'un subordonner
 
 ``` mermaid
 flowchart LR
